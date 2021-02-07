@@ -1,15 +1,15 @@
-const searchSong = () =>{
+const searchSong = async() =>{
     const searchText = document.getElementById('searchFeild');
     const url = `https://api.lyrics.ovh/suggest/${searchText.value}`
     // load data 
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displaySong(data.data))
+    const res = await fetch(url)
+        const data = await res.json();
+        displaySong(data.data);
 }
 
 const displaySong = songs => {
     const songContainer = document.getElementById('songContainer');
-
+    songContainer.innerHTML = '';
     songs.forEach(song => {
         // console.log(song);
         const songDiv = document.createElement('div');
@@ -30,6 +30,15 @@ const displaySong = songs => {
     });
 }
 
-const getLyric = (artist, title) =>{
-    console.log(artist, title);
+const getLyric = async (artist, title) =>{
+    const url = `https://api.lyrics.ovh/v1/${artist}/${title}`;
+    const res = await fetch(url)
+        const data = await res.json();
+        displayLyrics(data.lyrics);
+}
+
+const displayLyrics = lyrics => {
+    console.log(lyrics);
+    const lyricsDiv = document.getElementById('songLyrics');
+    lyricsDiv.innerText = lyrics;
 }
